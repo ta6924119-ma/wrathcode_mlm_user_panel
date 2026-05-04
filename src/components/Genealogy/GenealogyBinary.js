@@ -127,7 +127,7 @@ const GenealogyBinary = ({ user }) => {
 
         <div className="tree-container">
           <div className="tree-wrapper">
-            {treeData && renderNode(treeData, true)}          </div>
+            {treeData && renderNode(treeData, true)} </div>
         </div>
 
         {selectedNode && (

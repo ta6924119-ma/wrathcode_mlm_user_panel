@@ -39,44 +39,14 @@ const AuthService = {
   },
 
   // KYC APIs
-  // submitKYC: async (data) => {
-  //     const url = ApiConfig.baseUrl + ApiConfig.kycSubmit;
-  //     return await ApiCallPost(url, data);
-  // },
-  // submitKYC: async (data) => {
-  //   const formData = new FormData();
-
-
-  //   formData.append("fullName", data.fullName);
-  //   formData.append("dateOfBirth", data.dateOfBirth);
-  //   formData.append("address", data.address);
-  //   formData.append("city", data.city);
-  //   formData.append("state", data.state);
-  //   formData.append("pincode", data.zipCode);
-  //   formData.append("country", data.country);
-  //   formData.append("phoneNumber", data.phoneNumber);
-  //   formData.append("idType", data.idType);
-  //   formData.append("idNumber", data.idNumber);
-
-  //   // ✅ FILES
-  //   formData.append("frontImage", data.idFrontImage);
-
-  //   formData.append("backImage", data.idBackImage);
-  //   formData.append("selfiewithidnumber", data.selfieImage);
-  //   formData.append("addressImage", data.proofOfAddress);
-
-  //   // ✅ DEBUG
-  //   for (let pair of formData.entries()) {
-  //     console.log(pair[0], pair[1]);
-  //   }
-
-  //   return await ApiCallPost("/api/kyc/kyc", formData);
-  // },
-
+  submitKYC: async (data) => {
+      const url = ApiConfig.baseUrl + ApiConfig.kycSubmit;
+      return await ApiCallPost(url, data);
+  },
   submitKYC: async (data) => {
     const formData = new FormData();
 
-    // ✅ TEXT DATA
+
     formData.append("fullName", data.fullName);
     formData.append("dateOfBirth", data.dateOfBirth);
     formData.append("address", data.address);
@@ -90,50 +60,62 @@ const AuthService = {
 
     // ✅ FILES
     formData.append("frontImage", data.idFrontImage);
+
     formData.append("backImage", data.idBackImage);
     formData.append("selfiewithidnumber", data.selfieImage);
     formData.append("addressImage", data.proofOfAddress);
-
-    // ✅ TEMPORARY PREVIEW URLS
-    const frontImageUrl = data.idFrontImage
-      ? URL.createObjectURL(data.idFrontImage)
-      : "";
-
-    const backImageUrl = data.idBackImage
-      ? URL.createObjectURL(data.idBackImage)
-      : "";
-
-    const selfieImageUrl = data.selfieImage
-      ? URL.createObjectURL(data.selfieImage)
-      : "";
-
-    const addressImageUrl = data.proofOfAddress
-      ? URL.createObjectURL(data.proofOfAddress)
-      : "";
-
-    // ✅ URL ALSO SEND
-    formData.append("frontImageUrl", frontImageUrl);
-    formData.append("backImageUrl", backImageUrl);
-    formData.append("selfieImageUrl", selfieImageUrl);
-    formData.append("addressImageUrl", addressImageUrl);
-
+  console.log("FormData entries:",formData);
     // ✅ DEBUG
-    console.log("Front URL =>", frontImageUrl);
-    console.log("Back URL =>", backImageUrl);
-    console.log("Selfie URL =>", selfieImageUrl);
-    console.log("Address URL =>", addressImageUrl);
-
-    // ✅ CHECK ALL FORMDATA
     for (let pair of formData.entries()) {
-      console.log(pair[0], pair[1]);
+      // console.log(pair[0], pair[1]);
     }
 
-    const response = await ApiCallPost("/api/kyc/kyc", formData);
-
-    console.log("API RESPONSE =>", response.data);
-
-    return response;
+    return await ApiCallPost("/api/kyc/kyc", formData);
   },
+// submitKYC: async (data) => {
+//   const kycData = new FormData();
+//   // ================= TEXT DATA =================
+//   kycData.append("fullName", data?.fullName);
+//   kycData.append("dateOfBirth", data?.dateOfBirth);
+//   kycData.append("address", data?.address);
+//   kycData .append("city", data?.city);
+//   kycData.append("state", data?.state);
+//   kycData.append("pincode", data?.zipCode);   
+//   kycData.append("country", data?.country);
+//   kycData.append("phoneNumber", data?.phoneNumber);
+//   kycData.append("idType", data?.idType);
+//   kycData.append("idNumber", data?.idNumber);
+// console.log( "form data in auth service",kycData)
+//   return
+
+//   // ================= FILES (IMPORTANT) =================
+//   if (data.idFrontImage) {
+//     kycData.append("frontImage", data.idFrontImage);
+//   }
+
+//   if (data.idBackImage) {
+//     kycData.append("backImage", data.idBackImage);
+//   }
+
+//   if (data.selfieImage) {
+//     kycData.append("selfiewithidnumber", data.selfieImage);
+//   }
+
+//   if (data.proofOfAddress) {
+//     kycData.append("addressImage", data.proofOfAddress);
+//   }
+
+//   // ================= DEBUG =================
+//   for (let pair of kycData.entries()) {
+//     console.log(pair[0], pair[1]);
+//   }
+
+//   // IMPORTANT: must be multipart/form-data (axios handles automatically)
+//   const response = await ApiCallPost("/api/kyc/kyc", kycData);
+
+//   return response;
+// },
+
 
 
   getKYCStatus: async () => {

@@ -101,37 +101,38 @@ const KYCVerification = ({ user, onVerificationComplete }) => {
     setCurrentStep(prev => Math.max(prev - 1, 1));
   };
 
-  const handleSubmit = async () => {
-    if (!validateStep(currentStep)) return;
+ const handleSubmit = async () => {
+  if (!validateStep(currentStep)) return;
 
-    setUploading(true);
+  setUploading(true);
 
-    try {
-      const response = await AuthService.submitKYC(verificationData);
+  try {
+    const response = await AuthService.submitKYC(verificationData);
 
-      if (!response?.success) {
-        alert(response?.message || "KYC submission failed");
-        return;
-      }
+    console.log("KYC RESPONSE:", response);
 
-      setVerificationStatus("pending");
-      console.log("KYC submitted successfully! Response:", response);
-
-      if (onVerificationComplete) {
-        onVerificationComplete({
-          ...user,
-          kycStatus: "pending",
-        });
-      }
-
-      alert("KYC submitted successfully! Under review.");
-    } catch (error) {
-      console.log("KYC ERROR:", error);
-      alert("Something went wrong");
-    } finally {
-      setUploading(false);
+    if (!response?.success) {
+      alert(response?.message || "KYC failed");
+      return;
     }
-  };
+
+    setVerificationStatus("pending");
+
+    if (onVerificationComplete) {
+      onVerificationComplete({
+        ...user,
+        kycStatus: "pending",
+      });
+    }
+
+    alert("KYC submitted successfully");
+  } catch (error) {
+    console.log(error);
+    alert("Server error");
+  } finally {
+    setUploading(false);
+  }
+};
 
   const getStatusBadge = () => {
     switch (verificationStatus) {

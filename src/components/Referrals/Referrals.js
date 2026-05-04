@@ -14,27 +14,32 @@ const Referrals = ({ user }) => {
     referralLink: ''
   });
 
+  const [stats, setStats] = useState({
+    totalReferrals: 0,
+    activeReferrals: 0,
+    pendingReferrals: 0,
+    totalEarnings: 0
+  });
+
   const referralCode = referralInfo?.referralCode || '';
   const referralLink = referralInfo?.referralLink || '';
-
-
 
   useEffect(() => {
     const fetchReferrals = async () => {
       try {
         setLoading(true);
 
-
         const response = await AuthService.getReferrals();
-
         const data = response?.data;
 
         if (data) {
           setReferrals(data.referralList || []);
           setReferralInfo(data.referralInfo || {});
+          setStats(data.stats || {});
         }
 
       } catch (error) {
+        console.error(error);
       } finally {
         setLoading(false);
       }
@@ -43,15 +48,12 @@ const Referrals = ({ user }) => {
     fetchReferrals();
   }, []);
 
-
   const copyToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(referralLink);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
-      console.error('Failed to copy:', err);
-      // Fallback for older browsers
       const textArea = document.createElement('textarea');
       textArea.value = referralLink;
       document.body.appendChild(textArea);
@@ -65,13 +67,17 @@ const Referrals = ({ user }) => {
 
   return (
     <div className="referrals-container">
+
+      {/* HEADER */}
       <div className="page-header">
         <h1>My Referrals</h1>
         <p>Manage and track your referrals</p>
       </div>
 
+      {/* SHARE CARD */}
       <div className="referral-share-card">
         <h2>Share Your Referral Link</h2>
+
         <div className="referral-link-container">
           <input
             type="text"
@@ -83,32 +89,42 @@ const Referrals = ({ user }) => {
             {copied ? '✓ Copied!' : 'Copy Link'}
           </button>
         </div>
+
         <div className="referral-code-display">
           <span className="code-label">Your Referral Code:</span>
           <span className="code-value">{referralCode}</span>
         </div>
       </div>
 
+      {/* STATS (FIXED) */}
       <div className="referrals-stats">
+
         <div className="stat-box">
-          <div className="stat-number">{referrals.length}</div>
+          <div className="stat-number">{stats.totalReferrals}</div>
           <div className="stat-text">Total Referrals</div>
         </div>
+
         <div className="stat-box">
-          <div className="stat-number">{referrals.filter(r => r.status === 'Active').length}</div>
+          <div className="stat-number">{stats.activeReferrals}</div>
           <div className="stat-text">Active Referrals</div>
         </div>
+
         <div className="stat-box">
           <div className="stat-number">
-            ${referrals.reduce((sum, r) => sum + parseFloat(String(r.earnings || '0').replace('$', '')), 0).toFixed(2)}
+            ${stats.totalEarnings ?? 0}
           </div>
           <div className="stat-text">Total Earnings</div>
         </div>
+
       </div>
 
+      {/* LIST */}
       <div className="referrals-list-card">
         <h2>Referral List</h2>
+
         <div className="referrals-table">
+
+          {/* HEADER */}
           <div className="table-header">
             <div className="table-cell">Name</div>
             <div className="table-cell">Email</div>
@@ -116,6 +132,8 @@ const Referrals = ({ user }) => {
             <div className="table-cell">Status</div>
             <div className="table-cell">Earnings</div>
           </div>
+
+          {/* BODY */}
           {loading ? (
             <div className="table-row" style={{ justifyContent: 'center', padding: '20px' }}>
               Loading referrals...
@@ -125,29 +143,41 @@ const Referrals = ({ user }) => {
               No referrals found.
             </div>
           ) : (
-            referrals.map((referral) => (
-              <div key={referral.id} className="table-row">
+            referrals.map((referral, i) => (
+              <div key={referral.id ?? i} className="table-row">
+
                 <div className="table-cell" data-label="Name">
-                  <div className="user-avatar">{referral.name?.charAt(0) || 'U'}</div>
+                  <div className="user-avatar">
+                    {referral.name?.charAt(0) || 'U'}
+                  </div>
                   <span>{referral.name}</span>
                 </div>
-                <div className="table-cell" data-label="Email">{referral.email}</div>
+
+                <div className="table-cell" data-label="Email">
+                  {referral.email}
+                </div>
+
                 <div className="table-cell" data-label="Join Date">
                   {new Date(referral.joinDate).toLocaleDateString()}
                 </div>
+
                 <div className="table-cell" data-label="Status">
                   <span className={`status-badge ${referral.status?.toLowerCase() || ''}`}>
                     {referral.status}
                   </span>
                 </div>
+
                 <div className="table-cell earnings" data-label="Earnings">
-                  {String(referral.earnings || '0').startsWith('$') ? referral.earnings : `$${referral.earnings}`}
+                  ${referral.amountInvested ?? 0}
                 </div>
+
               </div>
             ))
           )}
+
         </div>
       </div>
+
     </div>
   );
 };

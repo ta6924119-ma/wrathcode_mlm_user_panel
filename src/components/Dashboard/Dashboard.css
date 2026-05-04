@@ -403,3 +403,38 @@
     font-size: 14px;
   }
 }
+
+
+
+
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.stat-card-bs {
+  border-radius: 12px;
+  padding: 16px;
+  border: none;
+}
+
+.stat-icon-bs {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-label-bs {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.stat-value-bs {
+  font-size: 18px;
+  font-weight: 600;
+}
