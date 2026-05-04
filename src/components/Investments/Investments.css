@@ -1,0 +1,816 @@
+.investments-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  min-height: 100vh;
+}
+
+.page-header {
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.page-header h1 {
+  color: white;
+  font-size: 28px;
+  margin-bottom: 8px;
+  font-weight: 700;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.dark-mode .page-header h1 {
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.page-header p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode .page-header p {
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.section-title {
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.dark-mode .section-title {
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Plans Section */
+.plans-section {
+  margin-bottom: 40px;
+}
+
+/* Plans Table */
+.plans-table-card {
+  background: var(--card-bg-theme, linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(51, 65, 85, 0.9) 100%));
+  backdrop-filter: blur(20px);
+  border-radius: var(--radius-lg, 20px);
+  padding: 32px;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  margin-bottom: 30px;
+  border: 1px solid var(--border-color, rgba(148, 163, 184, 0.25));
+  color: var(--card-text, #e2e8f0);
+  transition: all 0.3s ease;
+}
+
+.plans-table-card:hover {
+  box-shadow:
+    0 12px 48px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+}
+
+.dark-mode .plans-table-card {
+  background: var(--card-bg-theme, var(--card-bg, rgba(30, 41, 59, 0.95))) !important;
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
+  box-shadow:
+    0 12px 48px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+    0 -6px 24px rgba(0, 0, 0, 0.3);
+  color: var(--card-text, #f1f5f9);
+}
+
+.plans-table {
+  display: flex;
+  flex-direction: column;
+}
+
+.plans-table .table-header {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 1.5fr 1fr 1fr 1.5fr;
+  gap: 16px;
+  padding: 16px;
+  background: var(--bg-overlay, rgba(241, 245, 249, 0.8));
+  border-radius: 12px;
+  font-weight: 600;
+  color: var(--card-text, #64748b) !important;
+  font-size: 14px;
+  margin-bottom: 12px;
+  border: 1px solid var(--border-color, rgba(0, 0, 0, 0.05));
+}
+
+.dark-mode .plans-table .table-header {
+  background: var(--bg-overlay, rgba(15, 23, 42, 0.8));
+  color: var(--card-text, rgba(241, 245, 249, 0.9)) !important;
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
+}
+
+.plan-table-row {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 1.5fr 1fr 1fr 1.5fr;
+  gap: 16px;
+  padding: 18px 16px;
+  border-bottom: 1px solid var(--border-color, rgba(240, 240, 240, 0.5));
+  align-items: center;
+  transition: all 0.2s ease;
+  border-radius: 12px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  background: transparent;
+}
+
+.plan-table-row:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.dark-mode .plan-table-row {
+  border-bottom: 1px solid var(--border-color, rgba(148, 163, 184, 0.2));
+}
+
+.plan-table-row:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.plans-table .table-cell {
+  color: var(--card-text, #1e293b) !important;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  word-break: break-word;
+}
+
+.dark-mode .plans-table .table-cell {
+  color: var(--card-text, #f1f5f9) !important;
+}
+
+.plan-cell-table {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.plan-icon-table {
+  font-size: 14px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+  border-radius: 10px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode .plan-icon-table {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.plan-name-table {
+  font-weight: 600;
+  color: var(--card-text, #1e293b) !important;
+  font-size: 14px;
+  text-transform: capitalize;
+}
+
+.dark-mode .plan-name-table {
+  color: var(--card-text, #f1f5f9) !important;
+}
+
+.roi-badge {
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.1) 100%);
+  color: #10b981;
+  font-weight: 600;
+  font-size: 14px;
+  display: inline-block;
+}
+
+.dark-mode .roi-badge {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(5, 150, 105, 0.2) 100%);
+  color: #34d399;
+}
+
+.invest-btn-table {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.invest-btn-table:hover {
+  opacity: 0.9;
+}
+
+.invest-btn-table:active {
+  opacity: 0.8;
+}
+
+/* Desktop: Show table, hide grid */
+.plans-table-desktop {
+  display: block;
+}
+
+.plans-grid-mobile {
+  display: none;
+}
+
+/* Mobile: Show table with data labels, hide grid */
+@media (max-width: 768px) {
+  .plans-table-desktop {
+    display: block !important;
+  }
+
+  .plans-grid-mobile {
+    display: none !important;
+  }
+}
+
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 24px;
+}
+
+/* Active Investments */
+.active-investments-section {
+  margin-bottom: 40px;
+}
+
+.active-investments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.active-investment-card {
+  background: var(--card-bg-theme, var(--card-bg, rgba(255, 255, 255, 0.95)));
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow:
+    0 12px 48px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(0, 0, 0, 0.05) inset,
+    0 -6px 24px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  border: 1px solid var(--border-color, rgba(0, 0, 0, 0.05));
+  position: relative;
+  color: var(--card-text, #1e293b);
+}
+
+.dark-mode .active-investment-card {
+  background: var(--card-bg-theme, var(--card-bg, rgba(30, 41, 59, 0.95))) !important;
+  border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1));
+  box-shadow:
+    0 12px 48px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+    0 -6px 24px rgba(0, 0, 0, 0.3);
+  color: var(--card-text, #f1f5f9);
+}
+
+
+.active-investment-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.active-investment-card:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.investment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.investment-plan-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.plan-icon {
+  font-size: 14px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+  border-radius: 12px;
+}
+
+.investment-plan-info h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--card-text, #1e293b) !important;
+  margin: 0 0 4px 0;
+}
+
+.investment-amount {
+  font-size: 14px;
+  color: var(--card-text, #64748b) !important;
+  font-weight: 500;
+}
+
+.investment-status {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.investment-status.active {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.investment-progress {
+  margin-bottom: 20px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+  background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+}
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #64748b;
+}
+
+.investment-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.detail-label {
+  font-size: 14px;
+  color: var(--card-text) !important;
+  opacity: 0.8;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.detail-value {
+  font-size: 14px;
+  color: var(--card-text) !important;
+  font-weight: 600;
+}
+
+.detail-value.earnings {
+  color: #10b981;
+}
+
+/* History Section */
+.investment-history-section {
+  margin-bottom: 40px;
+}
+
+.history-table {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+
+/* Desktop Table Styles - Ensure grid layout on desktop */
+@media (min-width: 769px) {
+  .plans-table .table-header {
+    display: grid !important;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr 1.5fr 1fr !important;
+    gap: 16px;
+    padding: 16px;
+    background: #f1f5f9;
+    border-radius: 8px;
+    font-weight: 600;
+    color: #475569;
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  .dark-mode .plans-table .table-header {
+    background: rgba(15, 23, 42, 0.8);
+    color: rgba(241, 245, 249, 0.9);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+  }
+
+  .plans-table .table-row {
+    display: grid !important;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr 1.5fr 1fr !important;
+    gap: 16px;
+    padding: 16px;
+    border-bottom: 1px solid #e2e8f0;
+    align-items: center;
+    transition: all 0.2s ease;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    margin-bottom: 4px;
+  }
+
+  .plans-table .table-cell {
+    display: block !important;
+  }
+}
+
+/* Fallback for smaller desktop screens */
+.plans-table .table-header {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr 1.5fr 1fr;
+  gap: 16px;
+  padding: 16px;
+  background: #f1f5f9;
+  border-radius: 8px;
+  font-weight: 600;
+  color: #475569;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.dark-mode .plans-table .table-header {
+  background: rgba(15, 23, 42, 0.8);
+  color: rgba(241, 245, 249, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.plans-table .table-row {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr 1.5fr 1fr;
+  gap: 16px;
+  padding: 16px;
+  border-bottom: 1px solid #e2e8f0;
+  align-items: center;
+  transition: all 0.2s ease;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  margin-bottom: 4px;
+}
+
+.dark-mode .plans-table .table-row {
+  background: rgba(30, 41, 59, 0.6);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.plans-table .table-row:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: rgba(249, 249, 249, 0.8);
+}
+
+.dark-mode .plans-table .table-row:hover {
+  background: rgba(51, 65, 85, 0.5);
+}
+
+.plans-table .table-row:last-child {
+  border-bottom: none;
+}
+
+.plans-table .table-cell {
+  font-size: 14px;
+  color: #1e293b;
+}
+
+.dark-mode .plans-table .table-cell {
+  color: #e2e8f0;
+}
+
+.plan-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.plan-icon-small {
+  font-size: 14px;
+}
+
+.earnings {
+  color: #10b981;
+  font-weight: 600;
+}
+
+.roi {
+  color: #6366f1;
+  font-weight: 600;
+}
+
+.status-badge {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-badge.completed {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+/* Charts Section */
+.charts-section {
+  margin-bottom: 40px;
+}
+
+.chart-wrapper {
+  background: var(--card-bg-theme, var(--card-bg, rgba(30, 41, 59, 0.85)));
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+    0 -4px 16px rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border-color, rgba(148, 163, 184, 0.2));
+  color: var(--card-text, #e2e8f0);
+  overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.chart-wrapper .recharts-responsive-container {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+}
+
+.chart-wrapper .recharts-wrapper {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+}
+
+.chart-wrapper .recharts-surface {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: hidden;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .plans-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .investments-container {
+    padding: 16px 12px;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .page-header h1 {
+    font-size: 28px;
+  }
+
+  .page-header p {
+    font-size: 14px;
+  }
+
+  .chart-wrapper {
+    padding: 16px;
+    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .chart-wrapper .recharts-responsive-container,
+  .chart-wrapper .recharts-wrapper,
+  .chart-wrapper .recharts-surface {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  /* Mobile: Show table with data labels */
+  .plans-table-desktop {
+    display: block !important;
+  }
+
+  .plans-grid-mobile {
+    display: none !important;
+  }
+
+  .plans-table-card {
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+
+  .plans-table .table-header {
+    display: none !important;
+  }
+
+  .plan-table-row {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    padding: 16px !important;
+    border: 1px solid var(--border-color, rgba(226, 232, 240, 0.5)) !important;
+    border-radius: 12px !important;
+    margin-bottom: 12px !important;
+    background: var(--card-bg, rgba(255, 255, 255, 0.95)) !important;
+  }
+
+  .dark-mode .plan-table-row {
+    background: var(--card-bg, rgba(30, 41, 59, 0.85)) !important;
+    border-color: var(--border-color, rgba(148, 163, 184, 0.2)) !important;
+  }
+
+  .plans-table .table-cell {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 10px 0 !important;
+    font-size: 14px !important;
+    border-bottom: 1px solid var(--border-color, rgba(226, 232, 240, 0.3)) !important;
+    width: 100% !important;
+  }
+
+  .plans-table .table-cell:last-child {
+    border-bottom: none !important;
+  }
+
+  .plans-table .table-cell::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: var(--card-text, #64748b) !important;
+    opacity: 0.8;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-right: 12px;
+    flex-shrink: 0;
+    min-width: 90px;
+  }
+
+  .plan-cell-table {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .plan-icon-table {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+  }
+
+  .plan-name-table {
+    font-size: 14px;
+    width: 100%;
+  }
+
+  .invest-btn-table {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    min-height: 44px;
+  }
+
+  .plans-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .investment-plan-card {
+    padding: 20px;
+  }
+
+  .plan-icon-large {
+    width: 56px;
+    height: 56px;
+    font-size: 14px;
+  }
+
+  .plan-name {
+    font-size: 14px;
+  }
+
+  .investment-details {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .active-investment-card {
+    padding: 20px;
+  }
+
+  .table-header,
+  .table-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .table-cell {
+    padding: 8px 0;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .investments-container {
+    padding: 12px 10px;
+  }
+
+  .page-header h1 {
+    font-size: 14px;
+  }
+
+  .chart-wrapper {
+    padding: 12px;
+    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .chart-wrapper .recharts-responsive-container,
+  .chart-wrapper .recharts-wrapper,
+  .chart-wrapper .recharts-surface {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .investment-plan-card {
+    padding: 16px;
+  }
+
+  .plan-icon-large {
+    width: 48px;
+    height: 48px;
+    font-size: 14px;
+  }
+
+  .plan-name {
+    font-size: 14px;
+  }
+
+  .plan-detail-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .invest-btn {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+}

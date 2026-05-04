@@ -1,0 +1,276 @@
+.investment-plan-card {
+  background: var(--card-bg-theme, var(--card-bg, rgba(255, 255, 255, 0.95)));
+  border-radius: 24px;
+  padding: 28px;
+  border-top: 5px solid var(--primary-color, #6366f1);
+  box-shadow:
+    0 12px 48px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(0, 0, 0, 0.05) inset,
+    0 -6px 24px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  border: 1px solid var(--border-color, rgba(0, 0, 0, 0.05));
+  color: var(--card-text, #1e293b);
+}
+
+.dark-mode .investment-plan-card {
+  background: var(--card-bg-theme, var(--card-bg, rgba(30, 41, 59, 0.85))) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid var(--border-color, rgba(148, 163, 184, 0.2)) !important;
+  border-top: 5px solid var(--primary-color, #6366f1) !important;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+    0 -4px 16px rgba(0, 0, 0, 0.4) !important;
+  color: var(--card-text, #e2e8f0) !important;
+}
+
+.investment-plan-card:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.investment-plan-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.6s ease;
+  z-index: 1;
+}
+
+.dark-mode .investment-plan-card::before {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+}
+
+.investment-plan-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 24px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.6) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.dark-mode .investment-plan-card::after {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+}
+
+.investment-plan-card:hover::before {
+  left: 100%;
+}
+
+.investment-plan-card:hover {
+  transform: translateY(-12px) rotateX(5deg) scale(1.02);
+  box-shadow:
+    0 24px 64px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(0, 0, 0, 0.08) inset,
+    0 -12px 36px rgba(0, 0, 0, 0.15),
+    0 0 40px rgba(0, 0, 0, 0.1);
+  border-top-width: 6px;
+}
+
+.plan-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.plan-icon-large {
+  font-size: 52px;
+  width: 72px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%);
+  border-radius: 18px;
+  box-shadow:
+    0 8px 24px rgba(99, 102, 241, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.5) inset,
+    0 -3px 12px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 2;
+  transform: translateZ(15px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.investment-plan-card:hover .plan-icon-large {
+  transform: translateZ(30px) scale(1.15) rotateY(10deg);
+  box-shadow:
+    0 12px 36px rgba(99, 102, 241, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.6) inset,
+    0 -5px 18px rgba(0, 0, 0, 0.15);
+}
+
+.plan-name {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--card-text, #1e293b) !important;
+  margin: 0;
+}
+
+.plan-details {
+  margin-bottom: 24px;
+}
+
+.plan-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.plan-detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-label {
+  font-size: 14px;
+  color: var(--card-text, #64748b) !important;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+.detail-value {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--card-text) !important;
+}
+
+.detail-value.roi {
+  color: #10b981;
+  font-size: 20px;
+}
+
+.plan-footer {
+  margin-top: 20px;
+}
+
+.invest-btn {
+  width: 100%;
+  padding: 16px 24px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow:
+    0 8px 24px rgba(99, 102, 241, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.2) inset,
+    0 -3px 12px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 2;
+  transform: translateZ(10px);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.invest-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.invest-btn:hover::before {
+  opacity: 1;
+}
+
+.invest-btn:hover {
+  transform: translateY(-4px) translateZ(20px) scale(1.02);
+  box-shadow:
+    0 12px 36px rgba(99, 102, 241, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.3) inset,
+    0 -5px 18px rgba(0, 0, 0, 0.3);
+}
+
+.invest-btn:active {
+  transform: translateY(-2px) translateZ(15px) scale(1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .investment-plan-card {
+    padding: 20px;
+  }
+
+  .plan-header {
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .plan-icon-large {
+    font-size: 40px;
+    width: 56px;
+    height: 56px;
+  }
+
+  .plan-name {
+    font-size: 20px;
+  }
+
+  .plan-detail-row {
+    padding: 10px 0;
+  }
+
+  .detail-value {
+    font-size: 15px;
+  }
+
+  .invest-btn {
+    padding: 14px 20px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .investment-plan-card {
+    padding: 16px;
+  }
+
+  .plan-icon-large {
+    font-size: 32px;
+    width: 48px;
+    height: 48px;
+  }
+
+  .plan-name {
+    font-size: 18px;
+  }
+
+  .detail-label {
+    font-size: 12px;
+  }
+
+  .detail-value {
+    font-size: 14px;
+  }
+
+  .invest-btn {
+    padding: 12px 18px;
+    font-size: 13px;
+  }
+}

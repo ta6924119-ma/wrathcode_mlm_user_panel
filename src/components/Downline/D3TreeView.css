@@ -1,0 +1,148 @@
+.d3-tree-container {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.d3-tree-controls {
+  margin-bottom: 12px;
+  text-align: right;
+}
+
+.d3-tree-hint {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0;
+}
+
+.d3-tree-svg {
+  width: 100%;
+  height: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+
+.d3-tree-svg .link {
+  transition: stroke-width 0.2s ease;
+}
+
+.d3-tree-svg .link:hover {
+  stroke-width: 3;
+}
+
+.d3-tree-svg .node {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.d3-tree-svg .node:hover {
+  transform: scale(1.1);
+}
+
+.d3-tree-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+}
+
+.empty-state {
+  text-align: center;
+  color: #64748b;
+}
+
+.empty-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+}
+
+.empty-state h3 {
+  font-size: 24px;
+  margin-bottom: 8px;
+  color: #1e293b;
+}
+
+.empty-state p {
+  font-size: 16px;
+  color: #64748b;
+}
+
+.d3-tooltip {
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.d3-tooltip strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .d3-tree-container {
+    padding: 12px;
+    border-radius: 16px;
+  }
+  
+  .d3-tree-svg {
+    height: 400px;
+  }
+
+  .d3-tree-empty {
+    min-height: 300px;
+    padding: 24px;
+  }
+
+  .empty-icon {
+    font-size: 48px;
+  }
+
+  .empty-state h3 {
+    font-size: 20px;
+  }
+
+  .empty-state p {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .d3-tree-container {
+    padding: 8px;
+    border-radius: 12px;
+  }
+  
+  .d3-tree-svg {
+    height: 300px;
+  }
+
+  .d3-tree-empty {
+    min-height: 250px;
+    padding: 20px;
+  }
+
+  .empty-icon {
+    font-size: 40px;
+  }
+
+  .empty-state h3 {
+    font-size: 18px;
+  }
+
+  .empty-state p {
+    font-size: 13px;
+  }
+
+  .d3-tree-hint {
+    font-size: 12px;
+  }
+}
