@@ -44,24 +44,29 @@ const KYCVerification = ({ user, onVerificationComplete }) => {
     }
   };
 
-  const handleImageUpload = (e, fieldName) => {
-    const file = e.target.files[0];
+ const handleImageUpload = (e, fieldName) => {
+  const file = e.target.files?.[0];
 
-    if (!file) return;
+  if (!file) return;
 
-    if (file.size > 5 * 1024 * 1024) {
-      setErrors((prev) => ({
-        ...prev,
-        [fieldName]: "File size must be less than 5MB",
-      }));
-      return;
-    }
+  // ✅ Debug
+  console.log("SELECTED FILE =>", file);
 
-    setVerificationData((prev) => ({
+  // ✅ Size check
+  if (file.size > 5 * 1024 * 1024) {
+    setErrors((prev) => ({
       ...prev,
-      [fieldName]: file,
+      [fieldName]: "File size must be less than 5MB",
     }));
-  };
+    return;
+  }
+
+  // ✅ File object save
+  setVerificationData((prev) => ({
+    ...prev,
+    [fieldName]: file,
+  }));
+};
 
   const validateStep = (step) => {
     const newErrors = {};

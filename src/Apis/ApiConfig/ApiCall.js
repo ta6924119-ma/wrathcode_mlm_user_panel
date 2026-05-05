@@ -1,13 +1,19 @@
 import axios from "axios";
 
-const API_BASE_URL = "http://10.81.210.155:3031";
+const API_BASE_URL = "http://192.168.1.7:3031";
+
+// const api = axios.create({
+//   baseURL: API_BASE_URL,
+//   headers: {
+//     "Content-Type": "application/json",
+//     // "ngrok-skip-browser-warning": "true",
+//   },
+//   timeout: 15000,
+// });
+
 
 const api = axios.create({
   baseURL: API_BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-    // "ngrok-skip-browser-warning": "true",
-  },
   timeout: 15000,
 });
 
@@ -15,12 +21,6 @@ const api = axios.create({
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token");
-
-    console.log("API REQUEST =>", {
-      url: config.url,
-      method: config.method,
-      token,
-    });
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -79,7 +79,7 @@ const handleError = (error) => {
       error:
         error.response.data?.message ||
         error.response.data ||
-        `Error ${error.response.staus}`,
+        `Error ${error.response.status}`,
     };
   } else if (error.request) {
 
@@ -100,6 +100,28 @@ const handleError = (error) => {
 
 
 
+// export const ApiCallPost = async (url, data, config = {}) => {
+//   try {
+//     const isFormData = data instanceof FormData;
+
+//     const response = await api.post(url, data, {
+//       ...config,
+//       headers: {
+//         ...(isFormData ? {} : { "Content-Type": "application/json" }),
+//         ...config.headers,
+//       },
+//     });
+
+//     return {
+//       success: true,
+//       ...(response.data || {}),
+//     };
+//   } catch (error) {
+//     return handleError(error);
+//   }
+// };
+
+
 export const ApiCallPost = async (url, data, config = {}) => {
   try {
     const isFormData = data instanceof FormData;
@@ -107,7 +129,10 @@ export const ApiCallPost = async (url, data, config = {}) => {
     const response = await api.post(url, data, {
       ...config,
       headers: {
-        ...(isFormData ? {} : { "Content-Type": "application/json" }),
+        ...(isFormData
+          ? {}
+          : { "Content-Type": "application/json" }),
+
         ...config.headers,
       },
     });
@@ -116,11 +141,11 @@ export const ApiCallPost = async (url, data, config = {}) => {
       success: true,
       ...(response.data || {}),
     };
+
   } catch (error) {
     return handleError(error);
   }
 };
-
 
 
 export const ApiCallGet = async (url, config = {}) => {
@@ -140,6 +165,8 @@ export const ApiCallGet = async (url, config = {}) => {
 
 export const ApiCallPut = async (url, data, config = {}) => {
   try {
+
+    //data FormData object h ya nahi
     const isFormData = data instanceof FormData;
 
     const response = await api.put(url, data, {

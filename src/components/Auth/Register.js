@@ -17,7 +17,7 @@ const Register = ({ onLogin }) => {
     email: '',
     password: '',
     confirmPassword: '',
-    referralCode: ''
+    referral: ''
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -55,7 +55,7 @@ const Register = ({ onLogin }) => {
   //     await new Promise(resolve => setTimeout(resolve, 1000));
 
   //     // Generate referral code
-  //     const referralCode = `REF${Date.now()}${Math.random().toString(36).substr(2, 5).toUpperCase()}`;
+  //     const referral = `REF${Date.now()}${Math.random().toString(36).substr(2, 5).toUpperCase()}`;
 
   //     // Mock registration - replace with actual API call
   //     const userData = {
@@ -65,8 +65,8 @@ const Register = ({ onLogin }) => {
   //       username: formData.email.split('@')[0],
   //       password: formData.password, // In production, hash this
   //       joinDate: new Date().toISOString(),
-  //       referralCode: referralCode,
-  //       referredBy: formData.referralCode || null
+  //       referral: referral,
+  //       referredBy: formData.referral || null
   //     };
 
   //     // Save to localStorage
@@ -100,7 +100,7 @@ const Register = ({ onLogin }) => {
         email: formData.email,
         password: formData.password,
         confirmPassword: formData.confirmPassword,
-        referralCode: formData.referralCode
+        referral: formData.referral
       });
 
       const isSuccess = response?.success !== false && response?.succ !== false;
@@ -212,12 +212,12 @@ const Register = ({ onLogin }) => {
           </div>
 
           <div className="form-group">
-            <label htmlFor="referralCode">Referral Code (Optional)</label>
+            <label htmlFor="referral">Referral Code (Optional)</label>
             <input
               type="text"
-              id="referralCode"
-              name="referralCode"
-              value={formData.referralCode}
+              id="referral"
+              name="referral"
+              value={formData.referral}
               onChange={handleChange}
               placeholder="Enter referral code if you have one"
             />

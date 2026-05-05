@@ -134,145 +134,515 @@
 
 
 
+// import React, { useEffect, useState } from 'react';
+// import BasePage from '../Pages/BasePage';
+// import { FaUserFriends, FaUsers, FaChartLine } from 'react-icons/fa';
+// import './GenealogySponsor.css';
+// import AuthService from '../../Apis/AuthService/AuthService';
+
+// const GenealogySponsor = ({ user }) => {
+//   const [treeData, setTreeData] = useState(null);
+//   const [loading, setLoading] = useState(false);
+//   const [error, setError] = useState('');
+
+//   useEffect(() => {
+//     fetchSponsorTree();
+//   }, []);
+
+//   const fetchSponsorTree = async () => {
+//     try {
+//       setLoading(true);
+
+//       const res = await AuthService.getSponsorTree();
+//       console.log(res, "api== =response")
+
+
+//       if (!res?.success) {
+//         setError(res?.message || "Failed to load data");
+//         return;
+//       }
+
+//       setTreeData(res.data);
+
+//     } catch (err) {
+//       console.error(err);
+//       setError("Something went wrong");
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   const renderLevel = (members, level) => {
+//     if (!Array.isArray(members) || members.length === 0) {
+//       return null;
+//     }
+//     return (
+//       <div className={`sponsor-level level-${level}`}>
+//         <div className="level-header">
+//           <h3>Level {level}</h3>
+//           <span>{members.length} members</span>
+//         </div>
+
+//         <div className="members-grid">
+//           {members.map((member) => (
+//             <div key={member.id} className="member-card">
+//               <div className="member-name">{member.name}</div>
+
+//               <div className="member-stats">
+//                 <span><FaChartLine /> ${(member.volume || 0).toLocaleString()}</span>
+//                 <span><FaUsers /> {member.members || 0}</span>
+//                 <p>Level: {member.level}</p>
+//               </div>
+
+//               {member.children?.length > 0 && (
+//                 <div className="has-children">
+//                   ↓ {member.children.length} downline
+//                 </div>
+//               )}
+//             </div>
+//           ))}
+//         </div>
+
+//         {members.some(m => m.children?.length > 0) && (
+//           <div className="next-level">
+//             {renderLevel(
+//               members.flatMap(m => m.children || []),
+//               //Sab members ke children ko ek flat array me convert
+//               level + 1
+//             )}
+//           </div>
+//         )}
+//       </div>
+//     );
+//   };
+
+//   return (
+//     <BasePage
+//       title="Matrix Tree"
+//       subtitle="View your network"
+//       icon={<FaUserFriends />}
+//     >
+//       <div className="genealogy-sponsor-content">
+
+//         {loading && <p>Loading...</p>}
+//         {error && <p style={{ color: 'red' }}>{error}</p>}
+
+//         {treeData && (
+//           <>
+//             {/* 📊 STATS ALWAYS SHOW */}
+//             <div className="sponsor-stats">
+//               <div className="stat-card">
+//                 <div className="stat-label">Total Network</div>
+//                 <div className="stat-value">
+//                   {treeData?.members ?? 0}
+//                 </div>
+//               </div>
+
+//               <div className="stat-card">
+//                 <div className="stat-label">Total Volume</div>
+//                 <div className="stat-value">
+//                   ${(treeData?.volume ?? 0).toLocaleString()}
+//                 </div>
+//               </div>
+
+//               <div className="stat-card">
+//                 <div className="stat-label">Direct Referrals</div>
+//                 <div className="stat-value">
+//                   {treeData?.children?.length ?? 0}
+//                 </div>
+//               </div>
+//             </div>
+
+//             {/* 🌳 TREE ONLY WHEN DATA AVAILABLE */}
+//             {treeData && (
+//               <div className="sponsor-tree-container">
+//                 <div className="root-member">
+//                   <div className="member-card root">
+//                     <div className="member-name">{treeData.name}</div>
+
+//                     <div className="member-stats">
+//                       <span><FaChartLine /> ${(treeData.volume || 0).toLocaleString()}</span>
+//                       <span><FaUsers /> {treeData.members}</span>
+//                     </div>
+//                   </div>
+//                 </div>
+
+//                 {renderLevel(treeData.children, 1)}
+//               </div>
+//             )}
+//           </>
+//         )}
+//       </div>
+//     </BasePage>
+//   );
+// };
+
+// export default GenealogySponsor;
+
+
+
+
 import React, { useEffect, useState } from 'react';
+
 import BasePage from '../Pages/BasePage';
-import { FaUserFriends, FaUsers, FaChartLine } from 'react-icons/fa';
+
+import {
+  FaUserFriends,
+  FaUsers,
+  FaChartLine
+} from 'react-icons/fa';
+
 import './GenealogySponsor.css';
+
 import AuthService from '../../Apis/AuthService/AuthService';
 
 const GenealogySponsor = ({ user }) => {
+
+  // =========================
+  // STATES
+  // =========================
+
   const [treeData, setTreeData] = useState(null);
+
+  const [matrixType, setMatrixType] = useState("");
+
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+
+  const [error, setError] = useState("");
+
+  // =========================
+  // API CALL
+  // =========================
 
   useEffect(() => {
     fetchSponsorTree();
   }, []);
 
   const fetchSponsorTree = async () => {
-    try {
-      setLoading(true);
 
-      const res = await AuthService.getSponsorTree();
-      console.log(res, "api== =response")
+  try {
 
+    setLoading(true);
 
-      if (!res?.success) {
-        setError(res?.message || "Failed to load data");
-        return;
-      }
+    const response = await AuthService.getSponsorTree();
 
-      setTreeData(res.data);
+    console.log("MATRIX TREE RESPONSE =>", response);
 
-    } catch (err) {
-      console.error(err);
-      setError("Something went wrong");
-    } finally {
-      setLoading(false);
+    if (!response?.success) {
+
+      setError(
+        response?.message || "Failed to load matrix tree"
+      );
+
+      return;
     }
+
+    // ✅ BACKEND DATA
+    const data = response?.data;
+
+    // ✅ SAVE TREE
+    setTreeData(data);
+
+    // ✅ MATRIX TYPE
+    setMatrixType(response?.type || "");
+
+  } catch (error) {
+
+    console.error(error);
+
+    setError("Something went wrong");
+
+  } finally {
+
+    setLoading(false);
+  }
+};
+
+  // =========================
+  // CALCULATE TOTAL MEMBERS
+  // =========================
+
+  const calculateMembers = (node) => {
+
+    if (!node) return 0;
+
+    return (
+      (node?.stats?.totalMembers || 0) +
+
+      calculateMembers(node?.children?.left) +
+
+      calculateMembers(node?.children?.mid) +
+
+      calculateMembers(node?.children?.right)
+    );
   };
 
-  const renderLevel = (members, level) => {
-    if (!Array.isArray(members) || members.length === 0) {
-      return null;
-    }
+  // =========================
+  // CALCULATE TOTAL AMOUNT
+  // =========================
+
+  const calculateAmount = (node) => {
+
+    if (!node) return 0;
+
     return (
-      <div className={`sponsor-level level-${level}`}>
-        <div className="level-header">
-          <h3>Level {level}</h3>
-          <span>{members.length} members</span>
+      (node?.stats?.totalAmount || 0) +
+
+      calculateAmount(node?.children?.left) +
+
+      calculateAmount(node?.children?.mid) +
+
+      calculateAmount(node?.children?.right)
+    );
+  };
+
+  // =========================
+  // RENDER NODE
+  // =========================
+
+  const renderNode = (node, isRoot = false) => {
+
+    if (!node) return null;
+
+    return (
+      <div
+        className={`tree-node ${isRoot ? 'root' : ''}`}
+      >
+
+        {/* ========================= */}
+        {/* NODE CARD */}
+        {/* ========================= */}
+
+        <div className="member-card">
+
+          <div className="member-name">
+            {node?.name || "N/A"}
+          </div>
+
+          <div className="member-level">
+            Level {node?.level || 0}
+          </div>
+
+          <div className="member-date">
+            {
+              node?.createdAt
+                ? new Date(node.createdAt).toLocaleDateString()
+                : "N/A"
+            }
+          </div>
+
+          <div className="member-stats">
+
+            <span>
+              <FaChartLine />
+
+              ₹{(
+                node?.stats?.totalAmount || 0
+              ).toLocaleString()}
+            </span>
+
+            <span>
+              <FaUsers />
+
+              {node?.stats?.totalMembers || 0}
+            </span>
+
+          </div>
+
         </div>
 
-        <div className="members-grid">
-          {members.map((member) => (
-            <div key={member.id} className="member-card">
-              <div className="member-name">{member.name}</div>
+        {/* ========================= */}
+        {/* CHILDREN */}
+        {/* ========================= */}
 
-              <div className="member-stats">
-                <span><FaChartLine /> ${(member.volume || 0).toLocaleString()}</span>
-                <span><FaUsers /> {member.members || 0}</span>
-                <p>Level: {member.level}</p>
-              </div>
+        {(node?.children?.left ||
+          node?.children?.mid ||
+          node?.children?.right) && (
 
-              {member.children?.length > 0 && (
-                <div className="has-children">
-                  ↓ {member.children.length} downline
+            <div className="children-wrapper">
+
+              {/* LEFT */}
+
+              {node?.children?.left && (
+
+                <div className="child-node left">
+
+                  <div className="child-label">
+                    Left
+                  </div>
+
+                  {renderNode(node.children.left)}
+
                 </div>
               )}
-            </div>
-          ))}
-        </div>
 
-        {members.some(m => m.children?.length > 0) && (
-          <div className="next-level">
-            {renderLevel(
-              members.flatMap(m => m.children || []),
-              //Sab members ke children ko ek flat array me convert
-              level + 1
-            )}
-          </div>
-        )}
+              {/* MID */}
+
+              {node?.children?.mid && (
+
+                <div className="child-node mid">
+
+                  <div className="child-label">
+                    Middle
+                  </div>
+
+                  {renderNode(node.children.mid)}
+
+                </div>
+              )}
+
+              {/* RIGHT */}
+
+              {node?.children?.right && (
+
+                <div className="child-node right">
+
+                  <div className="child-label">
+                    Right
+                  </div>
+
+                  {renderNode(node.children.right)}
+
+                </div>
+              )}
+
+            </div>
+          )}
+
       </div>
     );
   };
 
+  // =========================
+  // LOADING
+  // =========================
+
+  if (loading) {
+
+    return (
+      <BasePage
+        title="Matrix Tree"
+        subtitle="Loading..."
+        icon={<FaUserFriends />}
+      >
+
+        <div className="loading-text">
+          Loading Matrix Tree...
+        </div>
+
+      </BasePage>
+    );
+  }
+
+  // =========================
+  // ERROR
+  // =========================
+
+  if (error) {
+
+    return (
+      <BasePage
+        title="Matrix Tree"
+        subtitle="Error"
+        icon={<FaUserFriends />}
+      >
+
+        <div className="error-text">
+          {error}
+        </div>
+
+      </BasePage>
+    );
+  }
+
+  // =========================
+  // STATS
+  // =========================
+
+  const totalMembers =
+    calculateMembers(treeData);
+
+  const totalAmount =
+    calculateAmount(treeData);
+
+  const directReferrals =
+    [
+      treeData?.children?.left,
+      treeData?.children?.mid,
+      treeData?.children?.right
+    ].filter(Boolean).length;
+
+  // =========================
+  // JSX
+  // =========================
+
   return (
     <BasePage
       title="Matrix Tree"
-      subtitle="View your network"
+      subtitle="View your matrix network structure"
       icon={<FaUserFriends />}
     >
+
       <div className="genealogy-sponsor-content">
 
-        {loading && <p>Loading...</p>}
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {/* ========================= */}
+        {/* TOP STATS */}
+        {/* ========================= */}
 
-        {treeData && (
-          <>
-            {/* 📊 STATS ALWAYS SHOW */}
-            <div className="sponsor-stats">
-              <div className="stat-card">
-                <div className="stat-label">Total Network</div>
-                <div className="stat-value">
-                  {treeData?.members ?? 0}
+        <div className="sponsor-stats">
+
+          <div className="stat-card">
+  <div className="stat-label">
+    Left Count
+  </div>
+
+  <div className="stat-value">
+    {treeData?.stats?.leftCount || 0}
+  </div>
+</div>
+
+<div className="stat-card">
+  <div className="stat-label">
+    Mid Count
+  </div>
+
+  <div className="stat-value">
+    {treeData?.stats?.midCount || 0}
+  </div>
+</div>
+
+<div className="stat-card">
+  <div className="stat-label">
+    Right Count
+  </div>
+
+  <div className="stat-value">
+    {treeData?.stats?.rightCount || 0}
+  </div>
+</div>
+
+        </div>
+
+        {/* ========================= */}
+        {/* TREE */}
+        {/* ========================= */}
+
+        <div className="sponsor-tree-container">
+
+          {
+            treeData
+              ? renderNode(treeData, true)
+              : (
+                <div className="empty-tree">
+                  No Matrix Data Found
                 </div>
-              </div>
+              )
+          }
 
-              <div className="stat-card">
-                <div className="stat-label">Total Volume</div>
-                <div className="stat-value">
-                  ${(treeData?.volume ?? 0).toLocaleString()}
-                </div>
-              </div>
+        </div>
 
-              <div className="stat-card">
-                <div className="stat-label">Direct Referrals</div>
-                <div className="stat-value">
-                  {treeData?.children?.length ?? 0}
-                </div>
-              </div>
-            </div>
-
-            {/* 🌳 TREE ONLY WHEN DATA AVAILABLE */}
-            {treeData && (
-              <div className="sponsor-tree-container">
-                <div className="root-member">
-                  <div className="member-card root">
-                    <div className="member-name">{treeData.name}</div>
-
-                    <div className="member-stats">
-                      <span><FaChartLine /> ${(treeData.volume || 0).toLocaleString()}</span>
-                      <span><FaUsers /> {treeData.members}</span>
-                    </div>
-                  </div>
-                </div>
-
-                {renderLevel(treeData.children, 1)}
-              </div>
-            )}
-          </>
-        )}
       </div>
+
     </BasePage>
   );
 };

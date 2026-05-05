@@ -1,4 +1,4 @@
-const appUrl = 'http://10.81.210.155:3031'
+const appUrl = 'http://192.168.1.7:3031'
 
 
 export const ApiConfig = {

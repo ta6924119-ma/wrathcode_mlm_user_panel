@@ -19,28 +19,42 @@ const DepositWallet = () => {
     upi: "",
   });
 
-  useEffect(() => {
-    fetchHistory();
-  }, [fetchHistory]);
+ useEffect(() => {
+  fetchHistory();
+}, []);
 
   // ================= FETCH HISTORY =================
   const fetchHistory = async () => {
-    try {
-      setLoading(true);
+  try {
 
-      const response = await AuthService.getDepositHistory();
+    setLoading(true);
 
-      if (response?.data?.success) {
-        setHistory(response?.data?.data || []);
-      } else {
-        toast(response?.data?.message || "Failed to fetch history");
-      }
-    } catch (error) {
-      toast("Error fetching history");
-    } finally {
-      setLoading(false);
+    const response = await AuthService.getDepositHistory();
+
+    console.log("HISTORY RESPONSE =>", response);
+
+    if (response?.success) {
+
+      setHistory(response?.deposits || []);
+
+    } else {
+
+      toast(
+        response?.message || "Failed to fetch history"
+      );
     }
-  };
+
+  } catch (error) {
+
+    console.log(error);
+
+    toast("Error fetching history");
+
+  } finally {
+
+    setLoading(false);
+  }
+};
 
   // ================= HANDLE DEPOSIT =================
   const handleDeposit = async () => {
@@ -268,9 +282,9 @@ const DepositWallet = () => {
                 </span>
 
                 <span>
-                  {item.createdAt
-                    ? new Date(item.createdAt).toLocaleDateString()
-                    : "-"}
+                  {item.date
+  ? new Date(item.date).toLocaleDateString()
+  : "-"}
                 </span>
 
                 <span>{item.transactionId || "-"}</span>
