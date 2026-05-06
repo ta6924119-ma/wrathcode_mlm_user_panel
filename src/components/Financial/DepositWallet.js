@@ -19,44 +19,42 @@ const DepositWallet = () => {
     upi: "",
   });
 
- useEffect(() => {
-  fetchHistory();
-}, []);
+  useEffect(() => {
+    fetchHistory();
+  }, []);
 
-  // ================= FETCH HISTORY =================
   const fetchHistory = async () => {
-  try {
+    try {
 
-    setLoading(true);
+      setLoading(true);
 
-    const response = await AuthService.getDepositHistory();
+      const response = await AuthService.getDepositHistory();
 
-    console.log("HISTORY RESPONSE =>", response);
+      console.log("HISTORY RESPONSE =>", response);
 
-    if (response?.success) {
+      if (response?.success) {
 
-      setHistory(response?.deposits || []);
+        setHistory(response?.deposits || []);
 
-    } else {
+      } else {
 
-      toast(
-        response?.message || "Failed to fetch history"
-      );
+        toast(
+          response?.message || "Failed to fetch history"
+        );
+      }
+
+    } catch (error) {
+
+      console.log(error);
+
+      toast("Error fetching history");
+
+    } finally {
+
+      setLoading(false);
     }
+  };
 
-  } catch (error) {
-
-    console.log(error);
-
-    toast("Error fetching history");
-
-  } finally {
-
-    setLoading(false);
-  }
-};
-
-  // ================= HANDLE DEPOSIT =================
   const handleDeposit = async () => {
     try {
       const { amount } = accountDetails;
@@ -135,7 +133,6 @@ const DepositWallet = () => {
         <h1>Deposit Wallet</h1>
       </div>
 
-      {/* ================= PAYMENT METHOD ================= */}
       <div className="form-group">
         <label>Payment Method</label>
         <div className="payment-methods">
@@ -155,7 +152,6 @@ const DepositWallet = () => {
         </div>
       </div>
 
-      {/* ================= AMOUNT ================= */}
       <div className="form-group">
         <label>Amount</label>
         <input
@@ -172,7 +168,6 @@ const DepositWallet = () => {
         />
       </div>
 
-      {/* ================= BANK FORM ================= */}
       {paymentMethod === "bank" && (
         <div className="form-group">
           <h3>Bank Details</h3>
@@ -283,8 +278,8 @@ const DepositWallet = () => {
 
                 <span>
                   {item.date
-  ? new Date(item.date).toLocaleDateString()
-  : "-"}
+                    ? new Date(item.date).toLocaleDateString()
+                    : "-"}
                 </span>
 
                 <span>{item.transactionId || "-"}</span>
