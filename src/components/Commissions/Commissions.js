@@ -8,14 +8,14 @@ import './Commissions.css';
 
 
 //c = api se aana wala commission object
-const mapApiCommission = (c) => ({
-  id: c._id,
-  type: c.commissionType || 'direct',
+const mapApiCommission = (c, index) => ({
+  id: index,
+  type: c.type || 'direct',
   amount: c.amount || 0,
-  date: c.createdAt || c.paidAt || new Date().toISOString(),
+  date: c.date || new Date().toISOString(),
   status: (c.status || 'pending').toLowerCase(),
-  member: c.fromUser ? [c.fromUser.firstName, c.fromUser.lastName].filter(Boolean).join(' ') || c.fromUser.username : '',
-  description: c.description || '',
+  member: c.memberName || 'System',
+  description: c.type || '',
 });
 
 const Commissions = ({ user }) => {
@@ -32,21 +32,18 @@ const Commissions = ({ user }) => {
         setLoading(true);
 
         const response = await AuthService.getCommission();
+const commissionsArray =
+  response?.data?.history || [];
 
-        const commissionsArray =
-          response?.data?.data?.commissions ||
-          response?.data?.data ||
-          response?.data ||
-          [];
+if (!Array.isArray(commissionsArray)) {
+  return;
+}
 
-        if (!Array.isArray(commissionsArray)) {
-          return;
-        }
+const mappedData = commissionsArray.map((c, index) =>
+  mapApiCommission(c, index)
+);
 
-
-        // assuming response.data me array aa raha hai
-const mappedData = commissionsArray.map(mapApiCommission);        dispatch(setCommissions(mappedData));
-
+dispatch(setCommissions(mappedData));
       } catch (error) {
         console.error('Error fetching commissions:', error);
       } finally {

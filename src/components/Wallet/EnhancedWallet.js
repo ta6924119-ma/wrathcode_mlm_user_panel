@@ -145,8 +145,11 @@ const EnhancedWallet = ({ user }) => {
   const totalBalance = Object.values(wallets || {}).reduce((sum, wallet) => sum + (wallet?.balance || 0), 0);
   const totalPending = Object.values(wallets || {}).reduce((sum, wallet) => sum + (wallet?.pending || 0), 0);
 
-  const walletTransactions = (transactions || []).filter(t => t.walletType === activeWallet);
-
+const walletTransactions = (transactions || []).filter(
+  t =>
+    t.walletType === activeWallet ||
+    t.walletType === 'internal'
+);
   return (
     <div className="enhanced-wallet">
       <div className="wallet-header">
@@ -190,11 +193,11 @@ const EnhancedWallet = ({ user }) => {
               </div>
               <div className="wallet-info">
                 <div className="wallet-name">{wallet.name}</div>
-                <div className="wallet-balance">${wallets?.[wallet.type]?.balance.toFixed(2) || '0.00'}</div>
+                <div className="wallet-balance">${(wallets?.[wallet.type]?.balance || 0).toFixed(2)|| '0.00'}</div>
               </div>
             </div>
             <div className="wallet-pending">
-              Pending: ${wallets?.[wallet.type]?.pending.toFixed(2) || '0.00'}
+              Pending: ${(wallets?.[wallet.type]?.pending || 0).toFixed(2)|| '0.00'}
             </div>
           </div>
         ))}
@@ -249,9 +252,22 @@ const EnhancedWallet = ({ user }) => {
                       {new Date(transaction.date).toLocaleString()}
                     </div>
                   </div>
-                  <div className={`transaction-amount ${transaction.type}`}>
-                    {transaction.type === 'credit' ? '+' : '-'}${transaction.amount.toFixed(2)}
-                  </div>
+                 <div
+  className={`transaction-amount ${
+    transaction.type === 'credit'
+      ? 'credit'
+      : transaction.type === 'debit'
+      ? 'debit'
+      : 'transfer'
+  }`}
+>
+  {transaction.type === 'credit'
+    ? '+'
+    : transaction.type === 'debit'
+    ? '-'
+    : '↔'}$
+  {(transaction.amount || 0).toFixed(2)}
+</div>
                 </div>
               ))
             )}

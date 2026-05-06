@@ -12,7 +12,7 @@ export const ApiConfig = {
 
   //enhanced wallet
   walletDashboard: "/api/dashboard/wallet",
-  walletTransfer: "/api/wallet/transfer",
+  walletTransfer: "/api/dashboard/wallet/transfer",
 
   // Profile endpoints
   profileGet: "/api/profile/getprofile",

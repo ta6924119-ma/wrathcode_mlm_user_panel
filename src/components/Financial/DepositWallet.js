@@ -25,7 +25,6 @@ const DepositWallet = () => {
 
   const fetchHistory = async () => {
     try {
-
       setLoading(true);
 
       const response = await AuthService.getDepositHistory();
@@ -130,7 +129,7 @@ const DepositWallet = () => {
       icon={<FaWallet />}
     >
       <div className="wallet-content">
-        <h1>Deposit Wallet</h1>
+        <h1>Start Your Passive Income Today</h1>
       </div>
 
       <div className="form-group">
@@ -222,7 +221,6 @@ const DepositWallet = () => {
         </div>
       )}
 
-      {/* ================= UPI FORM ================= */}
       {paymentMethod === "upi" && (
         <div className="form-group">
           <label>UPI ID</label>
@@ -240,7 +238,6 @@ const DepositWallet = () => {
         </div>
       )}
 
-      {/* ================= BUTTON ================= */}
       <button
         className="deposit-btn"
         onClick={handleDeposit}
@@ -251,7 +248,6 @@ const DepositWallet = () => {
           : `Deposit ₹${accountDetails.amount || 0}`}
       </button>
 
-      {/* ================= HISTORY ================= */}
       <div className="history-main">
         <h2>Deposit History</h2>
 

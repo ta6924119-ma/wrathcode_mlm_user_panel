@@ -329,7 +329,7 @@ const Dashboard = ({ user }) => {
     { key: 'availableBalance', label: 'Available Balance', Icon: FaWallet, color: '#8b5cf6', isMoney: true },
     { key: 'monthlyEarning', label: 'Monthly Earnings', Icon: FaChartLine, color: '#06b6d4', isMoney: true },
   ];
-
+                                                                                                                                      
   const stats = useMemo(() => {
     if (!overview) return [];
 

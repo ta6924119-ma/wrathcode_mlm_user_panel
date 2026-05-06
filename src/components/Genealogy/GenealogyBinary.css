@@ -106,6 +106,7 @@
   min-width: 200px;
   text-align: center;
   cursor: pointer;
+  height: 120px;
   transition: all 0.3s ease;
   box-shadow: 
     0 4px 16px rgba(102, 126, 234, 0.4),

@@ -20,10 +20,10 @@ const [incomeData, setIncomeData] = useState([]);
       setLoading(true);
       const response = await AuthService.getMemberIncome();
       if (response.success) {
-        setIncomeData(response.data?.incomeData || response.data || []);
-      } else {
-        console.error("Failed to fetch member income:", response.error);
-      }
+  setIncomeData(response.history || []);
+} else {
+  console.error("Failed to fetch member income:", response.error);
+}
       setLoading(false);
     };
     fetchMemberIncome();
@@ -103,20 +103,21 @@ const [incomeData, setIncomeData] = useState([]);
                   </td>
                 </tr>
               ) : (
-                incomeData.map((item) => (
-                  <tr key={item.id}>
-                    <td>{new Date(item.date).toLocaleDateString()}</td>
-
-                    <td>{item.type}</td>
-                    <td className="amount">${(item.amount || 0).toFixed(2)}</td>
-                    <td>{item.member}</td>
-                    <td>
-                      <span className={`status-badge ${item.status?.toLowerCase() || ''}`}>
-                        {item.status}
-                      </span>
-                    </td>
-                  </tr>
-                ))
+                incomeData.map((item, index) => (
+  <tr key={index}>
+    <td>{new Date(item.date).toLocaleDateString()}</td>
+    <td>{item.type}</td>
+    <td className="amount">
+      ${(item.amount || 0).toFixed(2)}
+    </td>
+    <td>{item.memberSource}</td>
+    <td>
+      <span className={`status-badge ${item.status?.toLowerCase() || ''}`}>
+        {item.status}
+      </span>
+    </td>
+  </tr>
+))
               )}
             </tbody>
           </table>

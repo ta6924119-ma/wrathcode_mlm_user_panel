@@ -10,23 +10,38 @@ const JoiningReport = ({ user }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const fetchJoiningReport = async () => {
-      setLoading(true);
+  const fetchJoiningReport = async () => {
+    setLoading(true);
+
+    try {
       const response = await AuthService.getJoiningReport();
+
+      console.log("Joining Report:", response);
+
       if (response.success) {
-        setTeamData(response.data?.teamData || response.data || []);
+        const data = response.data?.history || [];
+
+        setTeamData(Array.isArray(data) ? data : []);
       } else {
         console.error("Failed to fetch joining report:", response.error);
       }
-      setLoading(false);
-    };
-    fetchJoiningReport();
-  }, []);
+    } catch (error) {
+      console.error("API Error:", error);
+    }
+
+    setLoading(false);
+  };
+
+  fetchJoiningReport();
+}, []);
 
   const totalMembers = teamData.length;
   const activeMembers = teamData.filter(m => m.status === 'Active').length;
-  const directReferrals = teamData.filter(m => m.level === 1).length;
-  const multipleReferrals = teamData.filter(m => m.level === 3).length;
+const directReferrals = teamData.filter(
+  m => m.level === 'Level 1'
+).length; 
+
+const multipleReferrals = teamData.filter(m => m.level === 3).length;
 
   return (
     <BasePage
@@ -99,22 +114,26 @@ const JoiningReport = ({ user }) => {
                   </td>
                 </tr>
               ) : (
-                teamData.map((member) => (
-                  <tr key={member.id}>
-                    <td>{member.name}</td>
-                    <td>{member.email}</td>
-                    <td>{new Date(member.joinDate).toLocaleDateString()}</td>
-                    <td>
-                      <span className="level-badge">Level {member.level}</span>
-                    </td>
-                    <td>{member.sponsor}</td>
-                    <td>
-                      <span className={`status-badge ${member.status?.toLowerCase() || ''}`}>
-                        {member.status}
-                      </span>
-                    </td>
-                  </tr>
-                ))
+                teamData.map((member, index) => (
+  <tr key={index}>
+    <td>{member.name}</td>
+    <td>{member.email}</td>
+    <td>{new Date(member.joinDate).toLocaleDateString()}</td>
+    <td>
+      <span className="level-badge">
+        {member.level}
+      </span>
+    </td>
+    <td>{member.sponsor}</td>
+    <td>
+      <span
+        className={`status-badge ${member.status?.toLowerCase() || ''}`}
+      >
+        {member.status}
+      </span>
+    </td>
+  </tr>
+))
               )}
             </tbody>
           </table>

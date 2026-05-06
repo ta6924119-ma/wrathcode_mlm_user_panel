@@ -4,7 +4,7 @@
 }
 
 .wallet-content h1 {
-  font-size: 24px;
+  font-size: 30px;
   font-weight: 600;
   margin-bottom: 5px;
 }
@@ -17,6 +17,13 @@
 /* Form Group */
 .form-group {
   margin: 20px 0;
+}
+.form-group h3{
+
+  font-size: 25px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  
 }
 
 .form-group label {
@@ -234,22 +241,21 @@
   background: #f5f6fa;
   font-weight: 600;
   color: #333;
+  
   border-radius: 8px;
 }
 
 /* ROW HOVER */
 .history-content:not(.header):hover {
-  background: #fafafa;
+  /* background: #fafafa; */
   transition: 0.2s ease;
 }
 
-/* ================= TEXT ================= */
 
 .history-content span {
   word-break: break-word;
 }
 
-/* ================= STATUS ================= */
 
 .status {
   font-weight: 500;

@@ -17,7 +17,6 @@ const Payout = ({ user }) => {
     cryptoAddress: ''
   });
 
-  // API se aayega — ab hardcoded nahi
   const [walletBalance, setWalletBalance] = useState(0);
   const [withdrawalHistory, setWithdrawalHistory] = useState([]);
 
@@ -26,7 +25,6 @@ const Payout = ({ user }) => {
   const adminCharges = 2.5; // 2.5%
   const tds = 5; // 5%
 
-  // ================= PAGE LOAD — FETCH DATA =================
   useEffect(() => {
     fetchPayoutData();
   }, []);
@@ -75,11 +73,7 @@ const Payout = ({ user }) => {
   // ================= WITHDRAW — API CALL =================
   const handleWithdraw = async () => {
     const amount = parseFloat(withdrawAmount);
-    console.log("Withdraw Amount:", amount);
-    console.log("Wallet Balance:", walletBalance);
-    console.log("Type:", typeof walletBalance);
-
-    // Validation
+   
     if (!amount || isNaN(amount)) {
       alertErrorMessage('Please enter a valid amount');
       return;
